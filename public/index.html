@@ -1,0 +1,27 @@
+<html>
+
+<body>
+    <div id='root'></div>
+    <script defer>
+        var root = document.getElementById('root');
+        var source = new EventSource('server.php');
+        root.innerHTML = 'Connecting';
+        source.addEventListener('open', function (event) {
+            root.innerHTML = 'Connected';
+        });
+        source.addEventListener('message', function (event) {
+            root.innerHTML = event.data;
+        });
+        source.addEventListener('close', function (event) {
+            source.close();
+        });
+        source.addEventListener('error', function (event) {
+            root.innerHTML = 'Conection error!';
+        });
+        window.addEventListener('beforeunload', function (event) {
+            source.close();
+        });
+    </script>
+</body>
+
+</html>

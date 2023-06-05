@@ -1,0 +1,12 @@
+version: '3'
+services:
+    php:
+        container_name: php-server-socket
+        image: php:8-cli-alpine
+        restart: unless-stopped
+        working_dir: /app
+        volumes:
+            - ./public:/app:ro
+        ports:
+            - 80:80
+        command: ["php", "-S", "0.0.0.0:80"]
