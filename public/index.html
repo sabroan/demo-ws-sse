@@ -1,0 +1,27 @@
+<html>
+
+<body>
+    <div id='root'></div>
+    <script defer>
+        var root = document.getElementById('root');
+        var socket = new WebSocket('ws://localhost:12345/server.php?timestamp=' + new Date().getTime());
+        root.innerHTML = 'Connecting';
+        socket.addEventListener('open', function (event) {
+            root.innerHTML = 'Connected';
+        });
+        socket.addEventListener('message', function (event) {
+            root.innerHTML = event.data;
+        });
+        socket.addEventListener('close', function (event) {
+            socket.close();
+        });
+        socket.addEventListener('error', function (event) {
+            root.innerHTML = 'Conection error!';
+        });
+        window.addEventListener('beforeunload', function (event) {
+            socket.close();
+        });
+    </script>
+</body>
+
+</html>
